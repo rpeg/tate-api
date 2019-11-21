@@ -1,7 +1,7 @@
 const path = require('path');
-const { transformer, transformerHeader } = require('knex-csv-transformer');
+const { transformer, transfomerHeader: transformerHeader } = require('knex-csv-transformer');
 
-exports.seed = transformer.seed({
+exports.seed = (knex) => transformer.seed({
   table: 'art',
   file: path.join(__dirname, '../csv/the-tate-collection.csv'),
   transformers: [

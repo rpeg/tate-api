@@ -22,8 +22,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/art', artRouter);
-app.use('/users', usersRouter);
+app.use('/api/art', artRouter);
+app.use('/api/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
