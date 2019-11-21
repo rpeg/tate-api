@@ -25,11 +25,35 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/:id/comments', (req, res, next) => {
   const id = parseInt(req.params.id);
-  Comment.query()
-    .insert({ artID: id, content: req.body.content, name: req.body.name })
-    .then((user) => {
-      res.json(user);
-    });
+
+  if (req.body.userID) {
+    Comment.query()
+      .insert({
+        artID: id, userID: req.body.userID, content: req.body.content, name: req.body.name,
+      })
+      .then((user) => {
+        res.json(user);
+      });
+  } else { // non-user can only have one comment by name
+    Comment.query()
+      .where('artID', id)
+      .then((comments) => {
+        const nonUserCommentsWithSameName = comments
+          .filter((c) => c.userID === null && c.name === req.body.name);
+
+        if (nonUserCommentsWithSameName.length === 0) {
+          Comment.query()
+            .insert({
+              artID: id, userID: null, content: req.body.content, name: req.body.name,
+            })
+            .then((user) => {
+              res.json(user);
+            });
+        } else {
+          res.sendStatus(403);
+        }
+      });
+  }
 });
 
 module.exports = router;
