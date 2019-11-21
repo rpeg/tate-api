@@ -15,8 +15,8 @@ class Art extends Model {
         relation: Model.HasManyRelation,
         modelClass: Comment,
         join: {
-          from: 'users.id',
-          to: 'comments.userId',
+          from: 'art.id',
+          to: 'comments.artID',
         },
       },
     };

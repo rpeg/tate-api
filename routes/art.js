@@ -6,9 +6,11 @@ const Art = require('../models/Art');
 const Comment = require('../models/Comment');
 
 router.get('/', (req, res, next) => {
-  Art.query().then((art) => {
-    res.json(art);
-  });
+  Art.query()
+    .eager('comments')
+    .then((art) => {
+      res.json(art);
+    });
 });
 
 router.get('/:id', (req, res, next) => {
