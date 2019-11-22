@@ -1,3 +1,25 @@
+CREATE SEQUENCE IF NOT EXISTS users_id_seq;
+
+CREATE TABLE "public"."users" (
+    "id" int4 NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+    "name" varchar(255) NOT NULL,
+    "age" int4 NOT NULL,
+    "location" varchar(255) NOT NULL,
+    PRIMARY KEY ("id")
+);
+
+CREATE SEQUENCE IF NOT EXISTS comments_id_seq;
+
+CREATE TABLE "public"."comments" (
+    "id" int4 NOT NULL DEFAULT nextval('comments_id_seq'::regclass),
+    "artID" int4,
+    "content" varchar(255) NOT NULL,
+    "name" varchar(255),
+    "userID" int4,
+    CONSTRAINT "comments_artid_foreign" FOREIGN KEY ("artID") REFERENCES "public"."art"("id"),
+    PRIMARY KEY ("id")
+);
+
 CREATE SEQUENCE IF NOT EXISTS art_id_seq;
 
 CREATE TABLE "public"."art" (
