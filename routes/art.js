@@ -8,6 +8,7 @@ const Comment = require('../models/Comment');
 router.get('/', (req, res, next) => {
   Art.query()
     .eager('comments')
+    .omit(['artID'])
     .then((art) => {
       res.json(art);
     });
@@ -18,6 +19,7 @@ router.get('/:id', (req, res, next) => {
   Art.query()
     .where('id', id)
     .eager('comments')
+    .omit(['artID'])
     .then((art) => {
       res.json(art);
     });
